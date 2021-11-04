@@ -28,10 +28,17 @@ def count_atoms(formula):
     output = ''
     for atom in element_list:
         if atom in formula:
-            # determine the number of atom
             i = formula.index(atom) # the index of atom in formula
-            i += len(atom) - 1 # consider the number of character of an  atom
             j = i + 1 # 'j' is a variable to check the number of characters behind 'i' being a number
+            
+            if len(atom) == 1 and j != len(formula) and formula[i:j+1] in element_list:
+                # check if this atom really exists in this formula
+                continue
+            else:
+                # consider the number of character of an atom has
+                i += len(atom) - 1 
+            
+            # determine the number of atom
             while j != len(formula) and formula[j] not in element_list:
                 j += 1
             if j == i + 1:
@@ -46,3 +53,5 @@ def count_atoms(formula):
 if __name__ == "__main__":
     chloroquine = 'C18H26ClN3'
     pairs = count_atoms(chloroquine)
+    zinc_ferrite = 'ZrFe2O4'
+    pairs = count_atoms(zinc_ferrite)
